@@ -43,6 +43,7 @@ function calculateSetWeight(week, set, max, roundTo5) {
 function calcSets(id) {
 	var max = $('#'+id).val();
 	var week = $('#cycleSelect').val();
+	var roundupto5 = false;
 	week = week -1;
 	if(!$.isNumeric(max)) {
 		$('#'+id).parent().parent().addClass('has-error has-feedback');
@@ -54,15 +55,18 @@ function calcSets(id) {
 	if($('#use90checkbox').is(':checked')) {
 		max = 0.9 * max;
 	}
+	if($('#roundupto5checkbox').is(':checked')) {
+		roundupto5 = true;
+	}
 	$('#'+id).parent().parent().parent().find('table').show();
 	var tablebody = $('#'+id).parent().parent().parent().find('tbody').first();
 	tablebody.empty();
 	//alert(numReps(week, 1).toString() + ' ' + week.toString());
-	tablebody.append('<tr ><th>Warmup</th><td>'+numReps(week, 0).toString()+'</td><td>'+calculateSetWeight(week, 0, max, true).toString()+'</td></tr>');
-	tablebody.append('<tr ><th>Warmup</th><td>'+numReps(week, 1).toString()+'</td><td>'+calculateSetWeight(week, 1, max, true).toString()+'</td></tr>');
-	tablebody.append('<tr class="success"><th>Set 1</th><td>'+numReps(week, 2).toString()+'</td><td>'+calculateSetWeight(week, 2, max, true).toString()+'</td></tr>');
-	tablebody.append('<tr class="success"><th>Set 2</th><td>'+numReps(week, 3).toString()+'</td><td>'+calculateSetWeight(week, 3, max, true).toString()+'</td></tr>');
-	tablebody.append('<tr class="success"><th>Set 3</th><td>'+numReps(week, 4).toString()+'</td><td>'+calculateSetWeight(week, 4, max, true).toString()+'</td></tr>');
+	tablebody.append('<tr ><th>Warmup</th><td>'+numReps(week, 0).toString()+'</td><td>'+calculateSetWeight(week, 0, max, roundupto5).toString()+'</td></tr>');
+	tablebody.append('<tr ><th>Warmup</th><td>'+numReps(week, 1).toString()+'</td><td>'+calculateSetWeight(week, 1, max, roundupto5).toString()+'</td></tr>');
+	tablebody.append('<tr class="success"><th>Set 1</th><td>'+numReps(week, 2).toString()+'</td><td>'+calculateSetWeight(week, 2, max, roundupto5).toString()+'</td></tr>');
+	tablebody.append('<tr class="success"><th>Set 2</th><td>'+numReps(week, 3).toString()+'</td><td>'+calculateSetWeight(week, 3, max, roundupto5).toString()+'</td></tr>');
+	tablebody.append('<tr class="success"><th>Set 3</th><td>'+numReps(week, 4).toString()+'</td><td>'+calculateSetWeight(week, 4, max, roundupto5).toString()+'</td></tr>');
 }
 
 function oneRepMaxCalc() {
@@ -91,6 +95,7 @@ function oneRepMaxCalc() {
 function saveSettings() {
 	var week = $('#cycleSelect').val();
 	var use90percent = $('#use90checkbox').is(':checked');
+	var roundupto5 = $('#roundupto5checkbox').is(':checked');
 	var currOHPMax = $('#pressCurrMax').val();
 	var currDLMax = $('#dlCurrMax').val();
 	var currBenchMax = $('#benchCurrMax').val();
@@ -106,6 +111,7 @@ function saveSettings() {
 function loadSettings() {
 	var week = Cookies.get('currWeek');
 	var use90percent = Cookies.get('use90percent');
+	var roundupto5 = Cookies.get('roundupto5');
 	var currOHPMax = Cookies.get('currOHPMax');
 	var currDLMax = Cookies.get('currDLMax');
 	var currBenchMax = Cookies.get('currBenchMax');
@@ -115,6 +121,9 @@ function loadSettings() {
 	}
 	if(use90percent == 'true') {
 		$('#use90checkbox').prop('checked', true);
+	}
+	if(roundupto5 == 'true') {
+		$('#roundupto5checkbox').prop('checked', true);
 	}
 	if(typeof currOHPMax != 'undefined') {
 		$('#pressCurrMax').val(currOHPMax);
@@ -156,6 +165,7 @@ $(document).ready(function() {
 	$('#copyAndCalculateAll').click(copyAndCalculateAll);
 	$('#cycleSelect').change(calculateAll);
 	$('#use90checkbox').change(calculateAll);
+	$('#roundupto5checkbox').change(calculateAll);
 	$('#ohpMax').change(calculateAll);
 	$('#dlMax').change(calculateAll);
 	$('#benchMax').change(calculateAll);
