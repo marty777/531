@@ -92,6 +92,24 @@ function oneRepMaxCalc() {
 	}
 }
 
+function saveSetting(key, value) {
+	if(typeof(Storage) !== 'undefined') {
+		localStorage.setItem(key, value);
+	}
+	else {
+		Cookies.set(key, value, {expires: 365});
+	}
+}
+
+function loadSetting(key) {
+	if(typeof(Storage) !== 'undefined') {
+		return localStorage.getItem(key);
+	}
+	else {
+		return Cookies.get(key);
+	}
+}
+
 function saveSettings() {
 	var week = $('#cycleSelect').val();
 	var use90percent = $('#use90checkbox').is(':checked');
@@ -100,22 +118,24 @@ function saveSettings() {
 	var currDLMax = $('#dlCurrMax').val();
 	var currBenchMax = $('#benchCurrMax').val();
 	var currSquatMax = $('#squatCurrMax').val();
-	Cookies.set('currWeek', week, {expires: 365});
-	Cookies.set('use90percent', use90percent, {expires: 365});
-	Cookies.set('currOHPMax', currOHPMax, {expires: 365});
-	Cookies.set('currDLMax', currDLMax, {expires: 365});
-	Cookies.set('currBenchMax', currBenchMax, {expires: 365});
-	Cookies.set('currSquatMax', currSquatMax, {expires: 365});
+	
+	saveSetting('currWeek', week);
+	saveSetting('use90percent', use90percent);
+	saveSetting('currOHPMax', currOHPMax);
+	saveSetting('currDLMax', currDLMax);
+	saveSetting('currBenchMax', currBenchMax);
+	saveSetting('currSquatMax', currSquatMax);
+	
 }
 
 function loadSettings() {
-	var week = Cookies.get('currWeek');
-	var use90percent = Cookies.get('use90percent');
-	var roundupto5 = Cookies.get('roundupto5');
-	var currOHPMax = Cookies.get('currOHPMax');
-	var currDLMax = Cookies.get('currDLMax');
-	var currBenchMax = Cookies.get('currBenchMax');
-	var currSquatMax = Cookies.get('currSquatMax');
+	var week = loadSetting('currWeek');
+	var use90percent = loadSetting('use90percent');
+	var roundupto5 = loadSetting('roundupto5');
+	var currOHPMax = loadSetting('currOHPMax');
+	var currDLMax = loadSetting('currDLMax');
+	var currBenchMax = loadSetting('currBenchMax');
+	var currSquatMax = loadSetting('currSquatMax');
 	if(typeof week != 'undefined') {
 		$('#cycleSelect').val(week);
 	}
