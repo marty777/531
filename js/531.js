@@ -121,6 +121,7 @@ function saveSettings() {
 	
 	saveSetting('currWeek', week);
 	saveSetting('use90percent', use90percent);
+	saveSetting('roundupto5', roundupto5);
 	saveSetting('currOHPMax', currOHPMax);
 	saveSetting('currDLMax', currDLMax);
 	saveSetting('currBenchMax', currBenchMax);
@@ -174,10 +175,6 @@ function copyAndCalculateAll() {
 $(document).ready(function() {
 	
 	$('#calc1RepMax').click(oneRepMaxCalc);
-	$('#testButton').click(function() {
-		calcSets('ohpMax');
-	})
-	$('#saveSettings').click(saveSettings);
 	$('#copyAndCalculateAll').click(copyAndCalculateAll);
 	$('#cycleSelect').change(calculateAll);
 	$('#use90checkbox').change(calculateAll);
