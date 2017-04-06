@@ -114,10 +114,10 @@ function saveSettings() {
 	var week = $('#cycleSelect').val();
 	var use90percent = $('#use90checkbox').is(':checked');
 	var roundupto5 = $('#roundupto5checkbox').is(':checked');
-	var currOHPMax = $('#pressCurrMax').val();
-	var currDLMax = $('#dlCurrMax').val();
-	var currBenchMax = $('#benchCurrMax').val();
-	var currSquatMax = $('#squatCurrMax').val();
+	var currOHPMax = $('#ohpMax').val();
+	var currDLMax = $('#dlMax').val();
+	var currBenchMax = $('#benchMax').val();
+	var currSquatMax = $('#squatMax').val();
 	
 	saveSetting('currWeek', week);
 	saveSetting('use90percent', use90percent);
@@ -146,16 +146,16 @@ function loadSettings() {
 		$('#roundupto5checkbox').prop('checked', true);
 	}
 	if(typeof currOHPMax != 'undefined') {
-		$('#pressCurrMax').val(currOHPMax);
+		$('#ohpMax').val(currOHPMax);
 	}
 	if(typeof currDLMax != 'undefined') {
-		$('#dlCurrMax').val(currDLMax);
+		$('#dlMax').val(currDLMax);
 	}
 	if(typeof currBenchMax != 'undefined') {
-		$('#benchCurrMax').val(currBenchMax);
+		$('#benchMax').val(currBenchMax);
 	}
 	if(typeof currSquatMax != 'undefined') {
-		$('#squatCurrMax').val(currSquatMax);
+		$('#squatMax').val(currSquatMax);
 	}
 }
 
@@ -168,11 +168,7 @@ function calculateAll() {
 }
 
 function copyAndCalculateAll() {
-	$('#ohpMax').val($('#pressCurrMax').val());
-	$('#dlMax').val($('#dlCurrMax').val());
-	$('#benchMax').val($('#benchCurrMax').val());
-	$('#squatMax').val($('#squatCurrMax').val());
-	calculateAll();
+	
 }
 
 $(document).ready(function() {
@@ -191,4 +187,7 @@ $(document).ready(function() {
 	$('#benchMax').change(calculateAll);
 	$('#squatMax').change(calculateAll);
 	loadSettings();
+	calculateAll();
+	
+	Sortable.create(currMaxs, { /* options */ });
 });
